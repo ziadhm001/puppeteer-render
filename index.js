@@ -4,8 +4,11 @@ const app = express();
 
 const PORT = process.env.PORT || 4000;
 
-app.get("/scrape", (req, res) => {
-  bot(10000,10000, res);
+app.get("/scrape/:firstPage/:secondPage", (req, res) => {
+  res.status(200).send({ success: true });
+  console.log("sent response");
+  // Method 1:
+  await bot(parseInt(req.params.firstPage),parseInt(req.params.secondPage), res);
 });
 
 app.get("/", (req, res) => {
