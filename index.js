@@ -1,11 +1,11 @@
 const express = require("express");
-const { bot } = require("./bot");
+const { bot } = require("./bot.js");
 const app = express();
 
 const PORT = process.env.PORT || 4000;
 
 app.get("/scrape", (req, res) => {
-  scrapeLogic(res);
+  bot(10000,10000);
 });
 
 app.get("/", (req, res) => {
