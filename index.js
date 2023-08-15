@@ -4,7 +4,7 @@ const app = express();
 
 const PORT = process.env.PORT || 4000;
 
-app.get("/scrape/:firstPage/:secondPage", (req, res) => {
+app.get("/scrape/:firstPage/:secondPage", async (req, res) => {
   res.status(200).send({ success: true });
   console.log("sent response");
   // Method 1:
