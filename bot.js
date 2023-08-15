@@ -31,6 +31,7 @@ const bot = async (homePageStay, secondPageStay, res) => {
   const MAX_HITS = 10;
   try{
   for (let i = 0; i < MAX_HITS; i++) {
+    console.log(`inside loop ${i}`)
     const browser = await puppeteer.launch({
       headless: true,
       args: [
@@ -54,23 +55,21 @@ const bot = async (homePageStay, secondPageStay, res) => {
     await page.setExtraHTTPHeaders({ referer: randomReferrer });
 
     // Simulate random user input for forms
-    const homePageStay = 10000
-    const secondPageStay = 10000
     let path = Math.floor(Math.random() * 3)
     if(path === 0)
     {
+        console.log(`inside path0)
         await page.goto('https://proxyium.com/');
         await page.type('#unique-form-control','https://eventsgoo.com/')
         await page.click('#unique-btn-blue')
         const randomWord = getRandomText(5);
         await page.waitForTimeout(homePageStay);
-        await page.type('#term', randomWord)
-        await page.waitForTimeout(150);
-        await page.click('#header > div > div.row.mt-2 > div.col-md-6.col-7 > div > div > form > div.search-btn > button')
+        await page.goto('https://eventsgoo.com/details/preventive-nutrition-engineering-261')
         await page.waitForTimeout(secondPageStay);
     }
     else if(path === 1)
     {
+        console.log(`inside path1)
         await page.goto('https://proxyium.com/');
         await page.type('#unique-form-control','https://eventsgoo.com/')
         await page.click('#unique-btn-blue')
@@ -80,6 +79,7 @@ const bot = async (homePageStay, secondPageStay, res) => {
     }  
     else if(path === 2)
     {
+          console.log(`inside path2)
         await page.goto('https://proxyium.com/');
         await page.type('#unique-form-control','https://eventsgoo.com/')
         await page.click('#unique-btn-blue')
