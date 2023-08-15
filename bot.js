@@ -1,6 +1,7 @@
 const puppeteer = require("puppeteer");
 require("dotenv").config();
-const bot = async (homePageStay, secondPageStay, res) => {
+const bot = async (homePageStay, secondPageStay) => {
+  console.log(homePageStay, secondPageStay);
   // Simulate unique user agent for each request
   const userAgents = [
     'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
@@ -89,10 +90,8 @@ const bot = async (homePageStay, secondPageStay, res) => {
     } 
     await browser.close();
   }
-    res.status(201).json({msg: "success"});
   } catch (e) {
     console.error(e);
-    res.send(`Something went wrong while running Puppeteer: ${e}`);
   }
 };
 
