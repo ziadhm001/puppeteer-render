@@ -59,7 +59,7 @@ const bot = async (homePageStay, secondPageStay) => {
     let path = Math.floor(Math.random() * 3)
     if(path === 0)
     {
-        console.log(`inside path0)
+        console.log(`inside path0`)
         await page.goto('https://proxyium.com/');
         await page.type('#unique-form-control','https://eventsgoo.com/')
         await page.click('#unique-btn-blue')
@@ -70,7 +70,7 @@ const bot = async (homePageStay, secondPageStay) => {
     }
     else if(path === 1)
     {
-        console.log(`inside path1)
+        console.log(`inside path1`)
         await page.goto('https://proxyium.com/');
         await page.type('#unique-form-control','https://eventsgoo.com/')
         await page.click('#unique-btn-blue')
@@ -80,7 +80,7 @@ const bot = async (homePageStay, secondPageStay) => {
     }  
     else if(path === 2)
     {
-          console.log(`inside path2)
+          console.log(`inside path2`)
         await page.goto('https://proxyium.com/');
         await page.type('#unique-form-control','https://eventsgoo.com/')
         await page.click('#unique-btn-blue')
