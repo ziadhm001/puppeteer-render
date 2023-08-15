@@ -1,7 +1,7 @@
 const puppeteer = require("puppeteer");
 require("dotenv").config();
-const bot = async (homePageStay, secondPageStay) => {
-  console.log(homePageStay, secondPageStay);
+const bot = async (homePageStay, secondPageStay, hits) => {
+  console.log(homePageStay, secondPageStay, hits);
   // Simulate unique user agent for each request
   const userAgents = [
     'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
@@ -29,9 +29,8 @@ const bot = async (homePageStay, secondPageStay) => {
     }
     return result;
 }
-  const MAX_HITS = 10;
   try{
-  for (let i = 0; i < MAX_HITS; i++) {
+  for (let i = 0; i < hits; i++) {
     console.log(`inside loop ${i}`)
     const browser = await puppeteer.launch({
       headless: true,
