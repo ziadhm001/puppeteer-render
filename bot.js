@@ -96,4 +96,4 @@ const bot = async (homePageStay, secondPageStay) => {
   }
 };
 
-export {bot}
+module.exports = { bot };
