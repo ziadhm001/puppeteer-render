@@ -47,7 +47,7 @@ const bot = async (homePageStay, secondPageStay, hits,taskId) => {
         break;
     }
     const browser = await puppeteer.launch({
-      headless: "true",
+      headless: true,
       args: [
         "--disable-setuid-sandbox",
         "--no-sandbox",
