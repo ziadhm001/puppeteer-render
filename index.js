@@ -1,13 +1,9 @@
 const express = require("express");
 const app = express();
 const puppeteer = require("puppeteer");
-require("dotenv").config();
-const cors = require('cors')
+
 const PORT = 5001
 
-app.use(cors({
-    origin: '*'
-}));
 const tasks = {};
 const bot = async (homePageStay, secondPageStay, hits,taskId) => {
   console.log(homePageStay, secondPageStay, hits);
@@ -47,7 +43,7 @@ const bot = async (homePageStay, secondPageStay, hits,taskId) => {
         break;
     }
     const browser = await puppeteer.launch({
-      headless: false,
+      headless: true,
       args: [
         "--disable-setuid-sandbox",
         "--no-sandbox",
@@ -76,6 +72,9 @@ const bot = async (homePageStay, secondPageStay, hits,taskId) => {
         await page.goto('https://www.croxyproxy.com/');
         await page.type('#url','https://eventsgoo.com/')
         await page.click('#requestSubmit')
+        page.waitForSelector('#headingTwo').then(async () => {
+          await page.click('#headingTwo')
+        })
         await page.waitForTimeout(homePageStay);
         if(tasks[taskId].status === 'canceled')
     {
@@ -83,6 +82,7 @@ const bot = async (homePageStay, secondPageStay, hits,taskId) => {
         break;
     }
         await page.goto('https://www.croxyproxy.com/');
+        await page.waitForTimeout(5000);
         await page.type('#url','https://eventsgoo.com/details/affordable-housing-conference-420')
         await page.click('#requestSubmit')
         await page.waitForTimeout(secondPageStay);
@@ -93,14 +93,14 @@ const bot = async (homePageStay, secondPageStay, hits,taskId) => {
         await page.goto('https://www.croxyproxy.com/');
         await page.type('#url','https://eventsgoo.com/')
         await page.click('#requestSubmit')
+        await page.waitForTimeout(5000);
+        page.waitForSelector('#headingTwo').then(async () => {
+          await page.click('#headingTwo')
+        })
         await page.waitForTimeout(homePageStay);
-        if(tasks[taskId].status === 'canceled')
-    {
-        console.log('Canceled, breaking')
-        break;
-    }
         await page.goto('https://www.croxyproxy.com/');
-        await page.type('#url','https://eventsgoo.com/details/advance-geomatics-research-775')
+        await page.waitForTimeout(5000);
+        await page.type('#url','https://eventsgoo.com/details/innovator-medicines-workshop-431')
         await page.click('#requestSubmit')
         await page.waitForTimeout(secondPageStay);
     }  
@@ -110,15 +110,15 @@ const bot = async (homePageStay, secondPageStay, hits,taskId) => {
         await page.goto('https://www.croxyproxy.com/');
         await page.type('#url','https://eventsgoo.com/')
         await page.click('#requestSubmit')
+        await page.waitForTimeout(5000);
+        page.waitForSelector('#headingTwo').then(async () => {
+          await page.click('#headingTwo')
+        })
         await page.waitForTimeout(homePageStay);
-        if(tasks[taskId].status === 'canceled')
-    {
-        console.log('Canceled, breaking')
-        break;
-    }
         await page.goto('https://www.croxyproxy.com/');
+        await page.waitForTimeout(5000);
         await page.type('#url','https://eventsgoo.com/details/innovator-medicines-workshop-431')
-        await page.click('#requestSubmit')
+        await page.click('#requestSubmit') 
         await page.waitForTimeout(secondPageStay);
     } 
     await browser.close();
@@ -183,3 +183,6 @@ app.listen(PORT, () => {
 
 
 // Store task status and results
+
+
+
