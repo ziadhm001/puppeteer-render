@@ -2,9 +2,12 @@ const express = require("express");
 const app = express();
 const puppeteer = require("puppeteer");
 require("dotenv").config();
-
+const cors = require('cors')
 const PORT = 5001
 
+app.use(cors({
+    origin: '*'
+}));
 const tasks = {};
 const bot = async (homePageStay, secondPageStay, hits,taskId) => {
   console.log(homePageStay, secondPageStay, hits);
