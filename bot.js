@@ -1,6 +1,11 @@
+const express = require("express");
+const app = express();
 const puppeteer = require("puppeteer");
-require("dotenv").config();
-const bot = async (homePageStay, secondPageStay, hits) => {
+
+const PORT = 5001
+
+const tasks = {};
+const bot = async (homePageStay, secondPageStay, hits,taskId) => {
   console.log(homePageStay, secondPageStay, hits);
   // Simulate unique user agent for each request
   const userAgents = [
@@ -32,8 +37,13 @@ const bot = async (homePageStay, secondPageStay, hits) => {
   try{
   for (let i = 0; i < hits; i++) {
     console.log(`inside loop ${i}`)
+    if(tasks[taskId].status === 'canceled')
+    {
+        console.log('Canceled, breaking')
+        break;
+    }
     const browser = await puppeteer.launch({
-      headless: true,
+      headless: "new",
       args: [
         "--disable-setuid-sandbox",
         "--no-sandbox",
@@ -59,39 +69,116 @@ const bot = async (homePageStay, secondPageStay, hits) => {
     if(path === 0)
     {
         console.log(`inside path0`)
-        await page.goto('https://proxyium.com/');
-        await page.type('#unique-form-control','https://eventsgoo.com/')
-        await page.click('#unique-btn-blue')
-        const randomWord = getRandomText(5);
+        await page.goto('https://www.croxyproxy.com/');
+        await page.type('#url','https://eventsgoo.com/')
+        await page.click('#requestSubmit')
         await page.waitForTimeout(homePageStay);
-        await page.goto('https://eventsgoo.com/details/preventive-nutrition-engineering-261')
+        if(tasks[taskId].status === 'canceled')
+    {
+        console.log('Canceled, breaking')
+        break;
+    }
+        await page.goto('https://www.croxyproxy.com/');
+        await page.type('#url','https://eventsgoo.com/details/affordable-housing-conference-420')
+        await page.click('#requestSubmit')
         await page.waitForTimeout(secondPageStay);
     }
     else if(path === 1)
     {
         console.log(`inside path1`)
-        await page.goto('https://proxyium.com/');
-        await page.type('#unique-form-control','https://eventsgoo.com/')
-        await page.click('#unique-btn-blue')
+        await page.goto('https://www.croxyproxy.com/');
+        await page.type('#url','https://eventsgoo.com/')
+        await page.click('#requestSubmit')
         await page.waitForTimeout(homePageStay);
-        await page.goto('https://eventsgoo.com/details/icbl-554')
+        if(tasks[taskId].status === 'canceled')
+    {
+        console.log('Canceled, breaking')
+        break;
+    }
+        const text = getRandomText()
+        await page.type('#term', text)
+        await page.click('#header > div > div.row.mt-2 > div.col-md-6.col-7 > div > div > form > div.search-btn > button')
         await page.waitForTimeout(secondPageStay);
     }  
     else if(path === 2)
     {
-          console.log(`inside path2`)
-        await page.goto('https://proxyium.com/');
-        await page.type('#unique-form-control','https://eventsgoo.com/')
-        await page.click('#unique-btn-blue')
+        console.log(`inside path2`)
+        await page.goto('https://www.croxyproxy.com/');
+        await page.type('#url','https://eventsgoo.com/')
+        await page.click('#requestSubmit')
         await page.waitForTimeout(homePageStay);
-        await page.goto('https://eventsgoo.com/details/preventive-nutrition-engineering-261')
+        if(tasks[taskId].status === 'canceled')
+    {
+        console.log('Canceled, breaking')
+        break;
+    }
+        await page.goto('https://www.croxyproxy.com/');
+        await page.type('#url','https://eventsgoo.com/details/innovator-medicines-workshop-431')
+        await page.click('#requestSubmit')
         await page.waitForTimeout(secondPageStay);
     } 
     await browser.close();
   }
+  tasks[taskId].status = 'completed';
   } catch (e) {
     console.error(e);
+    tasks[taskId].status = 'failed';
   }
 };
 
-module.exports = { bot };
+function generateTaskId() {
+  // Generate a random alphanumeric task ID
+  return Math.random().toString(36).substring(2, 10);
+}
+
+app.get('/task/', (req, res) => {
+  
+
+  if (tasks === {}) {
+    return res.status(404).send('No Tasks.');
+  }
+
+  res.json(tasks);
+});
+
+app.get("/scrape/:firstPage/:secondPage/:hits", async (req, res) => {
+  try{
+      // Generate a unique task ID
+      const taskId = generateTaskId();
+
+      // Store the task status as 'running'
+      tasks[taskId] = { status: 'running' };
+  
+      // Return the task ID to the client
+      res.json({ taskId });
+  // Method 1:
+  await bot(parseInt(req.params.firstPage),parseInt(req.params.secondPage), parseInt(req.params.hits),taskId);
+  }
+  catch(err){
+    console.log(err)
+  }
+});
+
+app.get("/", (req, res) => {
+  res.send("Render Puppeteer server is up and running!");
+});
+
+app.get("/cancel", (req, res) => {
+    let keys = Object.keys(tasks)
+    for(let key in Object.keys(tasks))
+    {
+        tasks[keys[key]] = {status: 'canceled'}
+    }
+    res.send("All canceled");
+  });
+
+app.listen(PORT, () => {
+  console.log(`Listening on port ${PORT}`);
+});
+
+
+
+// Store task status and results
+
+
+
