@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const puppeteer = require("puppeteer");
+require("dotenv").config();
 
 const PORT = 5001
 
