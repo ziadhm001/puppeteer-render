@@ -95,9 +95,9 @@ const bot = async (homePageStay, secondPageStay, hits,taskId) => {
         console.log('Canceled, breaking')
         break;
     }
-        const text = getRandomText()
-        await page.type('#term', text)
-        await page.click('#header > div > div.row.mt-2 > div.col-md-6.col-7 > div > div > form > div.search-btn > button')
+        await page.goto('https://www.croxyproxy.com/');
+        await page.type('#url','https://eventsgoo.com/details/advance-geomatics-research-775')
+        await page.click('#requestSubmit')
         await page.waitForTimeout(secondPageStay);
     }  
     else if(path === 2)
