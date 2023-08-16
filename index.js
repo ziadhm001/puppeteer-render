@@ -1,6 +1,10 @@
 const express = require("express");
 const app = express();
 const puppeteer = require("puppeteer");
+const cors = require("cors")
+
+app.use(cors({origin: "*"}))
+
 
 const PORT = 5001
 
@@ -43,7 +47,7 @@ const bot = async (homePageStay, secondPageStay, hits,taskId) => {
         break;
     }
     const browser = await puppeteer.launch({
-      headless: true,
+      headless: "new",
       args: [
         "--disable-setuid-sandbox",
         "--no-sandbox",
